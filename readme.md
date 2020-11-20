@@ -2,7 +2,11 @@
 
 ## Configuration
 
-TODO
+### Legacy online duty schedule file
+
+- `config\services.yaml`
+    - `parameters`
+        - `api.schedule_file_path` - set the relative/absolute file path or URL (must be accessible for the service)
 
 ## Development
 
@@ -17,6 +21,12 @@ After cloning the repository install packages:
 
 ```commandline
 composer install
+```
+
+or for production build:
+
+```commandline
+./script/build
 ```
 
 To run server locally:
@@ -36,3 +46,7 @@ To run code checks and dependencies security scan:
 ```commandline
 ./script/lint
 ```
+
+## API
+
+The API is documented in a form of [Swagger/OpenAPI specification](doc/swagger.yaml).
