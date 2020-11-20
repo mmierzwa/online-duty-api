@@ -23,6 +23,11 @@ services:
             - '../src/Tests/'
             - '../src/**/*Exception.php'
 
+    # CORS configuration
+    App\EventListener\CorsListener:
+      tags:
+        - { name: kernel.event_subscriber }
+
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:

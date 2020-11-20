@@ -10,7 +10,6 @@ class DefaultControllerFunctionalTest extends WebTestCase
     {
         // given
         $client = static::createClient();
-        $client->disableReboot();
 
         $expected = json_encode(
             [
@@ -41,5 +40,18 @@ class DefaultControllerFunctionalTest extends WebTestCase
             $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString($expected,
             $client->getResponse()->getContent());
+    }
+
+    public function testReturnsCorsHeaders() {
+        // given
+        $client = static::createClient();
+
+        // when
+        $client->request('GET', '/');
+
+        // then
+        $this->assertResponseHeaderSame('Access-Control-Allow-Origin', '*');
+        $this->assertResponseHeaderSame('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS');
+        $this->assertResponseHeaderSame('Access-Control-Allow-Headers', '*');
     }
 }
