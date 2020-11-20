@@ -50,3 +50,7 @@ To run code checks and dependencies security scan:
 ## API
 
 The API is documented in a form of [Swagger/OpenAPI specification](doc/swagger.yaml).
+
+## License
+
+The project is licensed on MIT license. For details check the [license file](LICENSE.md).
