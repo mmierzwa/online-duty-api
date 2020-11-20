@@ -1,20 +1,10 @@
 <?php
 
-
-namespace App\Repository;
-
+namespace App\Service;
 
 use DateTime;
 
-interface OnlineDutyRepository
-{
-    /**
-     * @return OnlineDuty[]
-     */
-    public function getAll(): array;
-}
-
-class OnlineDuty
+class ScheduleItem
 {
     private DateTime $from;
 

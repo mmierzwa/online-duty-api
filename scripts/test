@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# TODO replace direct shell execution with docker container
+./bin/phpunit

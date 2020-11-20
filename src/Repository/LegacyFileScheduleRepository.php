@@ -2,10 +2,13 @@
 
 namespace App\Repository;
 
+use App\Service\ScheduleItem;
+use App\Service\ScheduleRepository;
+use DateInterval;
 use DateTime;
-use PHPUnit\Exception;
+use Exception;
 
-class LegacyFileOnlineDutyRepository implements OnlineDutyRepository
+class LegacyFileScheduleRepository implements ScheduleRepository
 {
     /**
      * @var string
@@ -22,12 +25,12 @@ class LegacyFileOnlineDutyRepository implements OnlineDutyRepository
      */
     public function getAll(): array
     {
-        $schedule = $this->readScheduleFile();
-        return $schedule;
+        return $this->readScheduleFile();
     }
 
     /**
-     * @return OnlineDuty[]
+     * @return ScheduleItem[]
+     * @throws LegacyFileFormatException
      */
     private function readScheduleFile(): array
     {
@@ -45,7 +48,7 @@ class LegacyFileOnlineDutyRepository implements OnlineDutyRepository
         return $schedule;
     }
 
-    private function lineToOnlineDuty(string $line): OnlineDuty
+    private function lineToOnlineDuty(string $line): ScheduleItem
     {
         try {
             preg_match('/^(?<year>\d{4})\|(?<month>\d{2})\|(?<day>\d{2})\|(?<startHour>\d{2})\|(?<endHour>\d{2})/', $line, $matches);
@@ -56,15 +59,23 @@ class LegacyFileOnlineDutyRepository implements OnlineDutyRepository
             $startHour = $matches['startHour'];
             $endHour = $matches['endHour'];
 
-            $start = sprintf('%s-%s-%s %s:00:00.000', $year, $month, $day, $startHour);
-            $end = sprintf('%s-%s-%s %s:00:00.000', $year, $month, $day, $endHour);
+            $start = $this->toDate($year, $month, $day, $startHour);
+            $end = $this->toDate($year, $month, $day, $endHour);
 
-            return new OnlineDuty(
-                new DateTime($start),
-                new DateTime($end)
-            );
-        } catch (\Exception $ex) {
+            if ($endHour == "00")
+            {
+                $end = $end->add(new DateInterval('P1D'));
+            }
+
+            return new ScheduleItem($start, $end);
+        } catch (Exception $ex) {
             throw new LegacyFileFormatException('schedule file has wrong format', 0, $ex);
         }
+    }
+
+    private function toDate(string $year, string $month, string $day, string $hour): DateTime
+    {
+        $dateStr = sprintf('%s-%s-%s %s:00:00.000', $year, $month, $day, $hour);
+        return new DateTime($dateStr);
     }
 }

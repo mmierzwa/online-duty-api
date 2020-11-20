@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\OnlineDuty;
-use App\Repository\OnlineDutyRepository;
+use App\Service\ScheduleService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,15 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    private OnlineDutyRepository $repository;
+    private ScheduleService $service;
 
     /**
      * DefaultController constructor.
-     * @param OnlineDutyRepository $repository
+     * @param ScheduleService $service
      */
-    public function __construct(OnlineDutyRepository $repository)
+    public function __construct(ScheduleService $service)
     {
-        $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -28,10 +27,7 @@ class DefaultController extends AbstractController
      */
     public function all(): JsonResponse
     {
-        $duties = $this->repository->getAll();
-        usort($duties, function (OnlineDuty $dutyA, OnlineDuty $dutyB) {
-            return new DateTime($dutyA->getFrom() <=> $dutyB->getFrom());
-        });
+        $duties = $this->service->getAll();
         $data = [];
 
         foreach ($duties as $duty) {

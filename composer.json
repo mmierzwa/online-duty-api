@@ -14,11 +14,11 @@
         "symfony/yaml": "5.2.*"
     },
     "require-dev": {
+        "ext-json": "*",
         "symfony/browser-kit": "5.2.*",
         "symfony/css-selector": "5.2.x-dev",
         "symfony/maker-bundle": "^1.0@dev",
-        "symfony/phpunit-bridge": "5.2.x-dev",
-      "ext-json": "*"
+        "symfony/phpunit-bridge": "9999999-dev"
     },
     "config": {
         "optimize-autoloader": true,
