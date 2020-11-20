@@ -1,0 +1,44 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: online-duty-api
+servers:
+  - url: 'localhost'
+
+paths:
+  /:
+    get:
+      summary: Returns a list of consolidated registered online duties
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/onlineDuty'
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              description: '*'
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+              description: 'GET,HEAD,OPTIONS'
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+              description: '*'
+components:
+  schemas:
+    onlineDuty:
+      type: object
+      properties:
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
