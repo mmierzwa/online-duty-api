@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# TODO replace direct shell execution with docker container
+export APP_ENV=prod
+composer install --no-dev --optimize-autoloader
+composer dump-autoload --optimize --no-dev --classmap-authoritative

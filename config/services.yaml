@@ -22,6 +22,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
             - '../src/**/*Exception.php'
+            - '../src/Service/ScheduleItem.php'
 
     # CORS configuration
     App\EventListener\CorsListener:
