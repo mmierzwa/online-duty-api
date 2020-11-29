@@ -51,6 +51,13 @@ To run code checks and dependencies security scan:
 
 The API is documented in a form of [Swagger/OpenAPI specification](doc/swagger.yaml).
 
+## Planned
+
+- [ ] Add support for other data sources
+- [ ] Implement JS client for the API (types, API calls)
+- [ ] Introduce docker images for better local development and CI experience
+- [ ] Add CI code (with running tests at minimum)
+
 ## License
 
 The project is licensed on MIT license. For details check the [license file](LICENSE.md).
